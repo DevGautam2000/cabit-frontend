@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -20,25 +19,31 @@ import {
   MultipleSelect as Select,
   theme,
 } from "../components";
-import { getAllRides, getUserRides, signout } from "../api";
+import { fetchUser, getAllRides, signout } from "../api";
 import { LocalTaxiRounded, LogoutRounded } from "@mui/icons-material";
 import { Alert, Chip, IconButton, Snackbar, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useContextSelector } from "../context";
 import { App, Colors } from "../helpers";
-import { mini, sedan, tuv, van, suv } from "../assets";
-
-const vehicleImages = {
-  mini,
-  sedan,
-  van,
-  tuv,
-  suv,
-};
+import vehicleImages, { bg } from "../assets";
 
 export default function Album() {
-  const { user, vehicles, userRide, setUserRide, setVehicles } =
+  const { user, setUser, vehicles, userRide, setUserRide, setVehicles } =
     useContextSelector();
+  React.useEffect(() => {
+    const effect = () => {
+      fetchUser()
+        .then((u) => {
+          setUser(() => u);
+        })
+        .catch((err) => {
+          //ignore
+        });
+    };
+
+    return effect();
+    // eslint-disable-next-line
+  }, []);
 
   React.useEffect(() => {
     const effect = () => {
@@ -79,8 +84,9 @@ export default function Album() {
     }, 500);
   };
 
-  const isSelected = (con) => {
-    return con;
+  const scrollHandler = () => {
+    const displacement = window.innerHeight - (13 / 100) * window.innerHeight;
+    window.scrollBy(0, window.scrollY > 0 ? 0 : displacement);
   };
   return (
     <>
@@ -137,8 +143,12 @@ export default function Album() {
           <Box
             sx={{
               bgcolor: "background.paper",
+              background: `url(${bg})`,
               pt: 8,
               pb: 6,
+              minHeight: "80vh",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
             }}
           >
             <Container maxWidth="sm">
@@ -146,17 +156,12 @@ export default function Album() {
                 component="h1"
                 variant="h2"
                 align="center"
-                color="text.primary"
+                color="white"
                 gutterBottom
               >
                 {App.name}
               </Typography>
-              <Typography
-                variant="h5"
-                align="center"
-                color="text.secondary"
-                paragraph
-              >
+              <Typography variant="h5" align="center" color="white" paragraph>
                 {App.desc}
               </Typography>
               <Stack
@@ -165,10 +170,17 @@ export default function Album() {
                 spacing={2}
                 justifyContent="center"
               >
-                <Button variant="contained">Book Cab</Button>
+                <Button variant="contained" onClick={scrollHandler}>
+                  Book Cab
+                </Button>
                 <Button
                   variant="outlined"
+                  sx={{ color: "white", fontWeight: "bold" }}
                   onClick={() => {
+                    if (user === null || Object.keys(user).length === 0) {
+                      navigate("/signin");
+                      return;
+                    }
                     navigate("/history");
                   }}
                 >
@@ -177,7 +189,7 @@ export default function Album() {
               </Stack>
             </Container>
           </Box>
-          <hr style={{ width: "40vw" }} />
+          {/* <hr style={{ width: "40vw" }} /> */}
           <Container sx={{ py: 2 }} maxWidth="md">
             <Typography
               gutterBottom
@@ -287,6 +299,7 @@ export default function Album() {
                         <Button
                           size="small"
                           variant="outlined"
+                          disabled={availableSeats <= 0 ? true : false}
                           onClick={() => {
                             if (
                               user === null ||

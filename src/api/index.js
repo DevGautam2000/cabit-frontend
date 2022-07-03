@@ -15,6 +15,7 @@ export const APIROUTES = {
 
   GET_ALL_RIDES: "getallcabs",
   GET_USER_RIDES: "getcabs",
+  DELETE_USER_RIDE: "deletecab",
 };
 
 const KEYS = Object.freeze({
@@ -126,6 +127,24 @@ export function updateSeats(seatUpdateRequest) {
       const res = await axios.put(
         `${baseURL}${APIROUTES.UPDATE_SEATS.api}`,
         seatUpdateRequest
+      );
+      if (res) {
+        return resolve(res.data);
+      }
+    } catch (error) {
+      return reject(error.response.data);
+    }
+  });
+
+  return p;
+}
+
+export function deleteCab(data) {
+  const p = new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios.post(
+        `${baseURL}${APIROUTES.DELETE_USER_RIDE}`,
+        data
       );
       if (res) {
         return resolve(res.data);
