@@ -15,36 +15,14 @@ import Copyright from "../components/Copyright.js";
 import { useNavigate } from "react-router-dom";
 import { Alert, Snackbar } from "@mui/material";
 import { App, Colors } from "../helpers";
-import { fetchUser, signin } from "../api";
+import { signin } from "../api";
 
 export default function SignIn() {
   const navigate = useNavigate();
-  //   const auth = useSelector((state) => state.auth);
 
   const [message, setmessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState("error");
-  let isMounted = React.useRef(true);
-  // React.useEffect(() => {
-  //   const effect = () => {
-  //     isMounted.current = false;
-  //     let usr;
-  //     fetchUser()
-  //       .then((u) => {
-  //         usr = JSON.parse(u);
-  //         setUser(() => usr);
-  //       })
-  //       .catch((err) => {
-  //         // ignore
-  //       });
-
-  //     if (user !== null) {
-  //       navigate("/");
-  //     }
-  //   };
-  //   return effect();
-  //   // eslint-disable-next-line
-  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

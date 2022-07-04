@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { fetchUser, getAllRides } from "./api";
 import { useContextSelector } from "./context";
 import { History, Home, Ride, Signin, Signup } from "./screens";
 
 function AppRouter() {
-  const navigate = useNavigate();
   let isMounted = useRef(true);
   const { setUser, setVehicles } = useContextSelector();
 

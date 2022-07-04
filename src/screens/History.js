@@ -2,7 +2,7 @@ import { Alert, Snackbar, Stack, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { fetchUser, getUserRides } from "../api";
-import { Card } from "../components";
+import { Card, Copyright } from "../components";
 import { useContextSelector } from "../context";
 import { Colors } from "../helpers";
 
@@ -90,28 +90,31 @@ function History() {
         </Alert>
       </Snackbar>
       {rides.length > 0 ? (
-        <Container
-          sx={{
-            minHeight: "100vh",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Stack mt={10} alignItems="center" width="60vw">
-            <Typography
-              variant="h5"
-              align="center"
-              color={Colors.primary}
-              fontWeight="bold"
-            >
-              Booked Rides
-            </Typography>
-            <Box sx={{ height: 30 }} />
-            {rides.map((ride) => (
-              <Card ride={ride} key={ride.rid} showSnack={showSnack} />
-            ))}
-          </Stack>
-        </Container>
+        <>
+          <Container
+            sx={{
+              minHeight: "100vh",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Stack mt={10} alignItems="center" width="60vw">
+              <Typography
+                variant="h5"
+                align="center"
+                color={Colors.primary}
+                fontWeight="bold"
+              >
+                Booked Rides
+              </Typography>
+              <Box sx={{ height: 30 }} />
+              {rides.map((ride) => (
+                <Card ride={ride} key={ride.rid} showSnack={showSnack} />
+              ))}
+            </Stack>
+          </Container>
+          <Copyright />
+        </>
       ) : (
         <Container
           sx={{
@@ -131,6 +134,8 @@ function History() {
             </Typography>
             <Box sx={{ height: 30 }} />
           </Stack>
+
+          <Copyright />
         </Container>
       )}
     </>
