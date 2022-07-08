@@ -2,6 +2,12 @@
 
 ##### a cab booking service
 
+
+#### FRONTEND - REACT,MATERIAL UI
+#### BACKEND - JAVA: SPRING BOOT, JPA, LOMBOK
+#### DATABASE - MYSQL
+<br>
+<br>
 <img src="./src/assets/cars.png" />
 <br>
 <br>
