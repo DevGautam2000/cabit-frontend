@@ -55,7 +55,7 @@ export default function Album() {
     };
     return effect();
     // eslint-disable-next-line
-  }, [userRide]);
+  }, [userRide,user]);
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -117,10 +117,10 @@ export default function Album() {
               {App.fancyName}
             </Typography>
             <Container sx={{ flex: 1 }} />
-            {user?.firstName !== undefined ? (
+            {user !== undefined ? (
               <>
                 <Typography variant="h6" color="inherit" noWrap>
-                  Hello &nbsp;{user.firstName}
+                  Hello &nbsp;{user?.firstName}
                 </Typography>
                 <Container sx={{ flex: 0.1 }} />
               </>

@@ -35,6 +35,10 @@ export default function Popup({ handleClose, open, showSnack }) {
       {userRide.seats ? (
         <DialogContent>
           Your total is: ₹ {+userRide.seats * +userRide.price}
+          <br />
+          <small>{`Travel date:  ${new Date(
+            then.setDate(now.getDate() + 3)
+          ).toDateString()}`}</small>
         </DialogContent>
       ) : null}
 
@@ -44,6 +48,7 @@ export default function Popup({ handleClose, open, showSnack }) {
         </IconButton>
         <IconButton
           onClick={() => {
+            if (+userRide.seats === 0 || +userRide.seats === null) return;
             const rid = userRide.rid;
             delete userRide.rid;
             const copy = {

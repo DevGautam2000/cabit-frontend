@@ -116,6 +116,7 @@ function Card({ ride, showSnack }) {
               background: Colors.primary,
               flex: 0.3,
             }}
+            disabled={new Date(travelDate) > new Date() ? false : true}
             onClick={() => {
               deleteCab({ bookingId })
                 .then((data) => {
