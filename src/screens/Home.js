@@ -34,7 +34,7 @@ export default function Album() {
     const effect = () => {
       fetchUser()
         .then((u) => {
-          setUser(() => u);
+          setUser(() => JSON.parse(u));
         })
         .catch((err) => {
           //ignore
@@ -117,7 +117,7 @@ export default function Album() {
               {App.fancyName}
             </Typography>
             <Container sx={{ flex: 1 }} />
-            {user !== undefined ? (
+            {user?.firstName ? (
               <>
                 <Typography variant="h6" color="inherit" noWrap>
                   Hello &nbsp;{user?.firstName}
